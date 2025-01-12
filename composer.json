@@ -1,0 +1,22 @@
+{
+    "name": "dylan/webtech",
+    "description": "description",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "habbi69420",
+            "email": "40206734@roctilburg.nl"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*"
+      },
+      "autoload": {
+        "psr-4": {
+            "Acme\\": "src/"
+        }
+    }
+   
+}
+
