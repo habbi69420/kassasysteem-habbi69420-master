@@ -44,32 +44,30 @@ if ($idTafel) {
               </tr>";
         echo "</tbody></table>";
 
-        // Voeg een knop toe waarmee de gebruiker de rekening als betaald kan markeren
+        // Voegt een knop toe waarme je hem op betaald kan zetten
         echo "<form method='POST' style='margin-top: 20px;'>
                 <button type='submit' name='setPaid' value='1' style='padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;'>Betalen</button>
               </form>";
 
-        // Als de gebruiker op 'Betalen' heeft geklikt, markeer de rekening als betaald
+        // als hij dus op de knop heeft gelikt en het ding gemarkt staat als betaald komt er een regel dat die is betaald en zet in de database de status naar 1 wat betaald betekent dit wordt gedaan door de said paid
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['setPaid'])) {
             $rekening->setPaid($idTafel); // Zet de rekening als betaald
             echo "<p style='color: green;'>De rekening is betaald. Bedankt!</p>";
 
-            // Toon nu de knop om de tafel leeg te maken, nadat de rekening is betaald
+            // geeft een knop nadat er op betaald is geklikt waarme je de tafel kan leeg maken
             echo "<form method='POST' style='margin-top: 20px;'>
                     <button type='submit' name='emptyTable' value='1' style='padding: 10px 20px; background-color: #FF5722; color: white; border: none; border-radius: 5px; cursor: pointer;'>Tafel leegmaken</button>
                   </form>";
         }
 
-        // Voeg een knop toe om de tafel leeg te maken, maar alleen als de rekening is betaald
+        // Voegt een knop toe om de tafel leeg te maken  maar alleen als de rekening is betaald
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['emptyTable'])) {
-            $rekening->emptyTable($idTafel); // Leeg de tafel en redirect naar index.php
-            header('Location: index.php'); // Redirect naar index.php
+            $rekening->emptyTable($idTafel); // Leet de tafel en stuurt je terug naar index.php
+            header('Location: index.php'); 
             exit;
         }
 
-    } else {
-        echo "<p>Er is geen bestelling gevonden voor deze tafel.</p>";
-    }
+    } 
 
 } else {
     http_response_code(404);

@@ -10,10 +10,10 @@ if ($conn->connect_error) {
     die("Verbinding mislukt: " . $conn->connect_error);
 }
 
-// SQL query om het id en de omschrijving van alle tafels uit de database te halen
+// SQL query om de tafels uit de dataabse te hallen
 $result = $conn->query("SELECT idtafel, omschrijving FROM tafel");
 
-// Controleert of er tafels zijn opgehaald
+// Controleert of de tafels zijn opgehaald
 $tafels = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -32,14 +32,12 @@ require "../vendor/autoload.php";
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Kiezen tafel</title>
     <style>
-        /* Algemene reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Basisstijl voor het lichaam */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
@@ -47,13 +45,11 @@ require "../vendor/autoload.php";
             padding: 20px;
         }
 
-        /* Stijl voor de koptekst */
         h1 {
             text-align: center;
             color: #4CAF50;
         }
 
-        /* Stijl voor de tafellijst */
         .tafel-lijst {
             display: flex;
             flex-wrap: wrap;
@@ -81,7 +77,6 @@ require "../vendor/autoload.php";
             background-color: #e0f7e0;
         }
 
-        /* Stijl voor mobiele apparaten */
         @media (max-width: 768px) {
             .tafel-lijst div {
                 width: 100%;
@@ -92,14 +87,17 @@ require "../vendor/autoload.php";
 </head>
 <body>
     <h1>Kies een tafel</h1>
-    <div class="tafel-lijst">
-        <?php
-        foreach ($tafels as $tafel) {
-            $idtafel = ($tafel['idtafel']);
-            $omschrijving = ($tafel['omschrijving']);
-            echo "<div><a href='keuze.php?idtafel={$idtafel}'>{$omschrijving}</a></div>";
-        }
-        ?>
-    </div>
+<div class="tafel-lijst">
+    <?php
+    // gaat door alle tafels
+    foreach ($tafels as $tafel) {
+        // Haalt het ID van de tafel op
+        $idtafel = ($tafel['idtafel']);
+        $omschrijving = ($tafel['omschrijving']);
+        // geeft een link naar keuze.php met idtafel
+        echo "<div><a href='keuze.php?idtafel={$idtafel}'>{$omschrijving}</a></div>";
+    }
+    ?>
+</div>
 </body>
 </html>

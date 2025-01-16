@@ -6,14 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Toevoegen of Afrekenen</title>
     <style>
-        /* Algemene reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Basisstijl voor het lichaam */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
@@ -21,14 +19,12 @@
             padding: 20px;
         }
 
-        /* Stijl voor de koptekst */
         h1 {
             text-align: center;
             color: #4CAF50;
             margin-bottom: 30px;
         }
 
-        /* Stijl voor de links naar toevoegen en afrekenen */
         .actie-links {
             display: flex;
             flex-direction: column;
@@ -51,8 +47,6 @@
         .actie-links a:hover {
             background-color: #45a049;
         }
-
-        /* Stijl voor mobiele apparaten */
         @media (max-width: 768px) {
             .actie-links a {
                 width: 100%;
@@ -67,10 +61,13 @@
     <div class="actie-links">
         <?php
         $idTafel = $_GET['idtafel'] ?? false;
+        // als er een idtafelis dan geeft de een knop met toevoegen en afrekenen
         if ($idTafel) {
             echo "<a href='product.php?idtafel={$idTafel}'>Toevoegen</a>";
             echo "<a href='rekening.php?idtafel={$idTafel}'>Afrekenen</a>";
-        } else {
+        } 
+        
+        else {
             http_response_code(404);
             include('error_404.php');
             die();

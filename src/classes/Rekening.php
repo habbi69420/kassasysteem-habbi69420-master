@@ -16,12 +16,12 @@ class Rekening
 
         // Controleer of er producten zijn voor deze tafel die nog niet betaald zijn
         if (isset($bestelling['products']) && !empty($bestelling['products'])) {
-            // Update de 'betaald' status van alle producten naar 1 (betaald)
+            // Update de betaald status van alle producten naar 1 wat betaald betekent
             foreach ($bestelling['products'] as $idProduct) {
-                $bm->setColumnValue('betaald', 1); // Markeer als betaald
+                $bm->setColumnValue('betaald', 1); // zet hem in de database als betaald
                 $bm->setColumnValue('idtafel', $idTafel);
                 $bm->setColumnValue('idproduct', $idProduct);
-                $bm->save(); // Sla de wijziging op
+                $bm->save(); // Slaalt de wijziging op
             }
         }
     }
@@ -43,7 +43,7 @@ class Rekening
         $bill['tafel'] = $tm->getTafel($idTafel);
         $bill['datumtijd'] = [
             'timestamp' => $bestelling['datumtijd'],
-            'formatted' => date('d-m-Y H:i', (int)$bestelling['datumtijd']) // Zorg ervoor dat het een geldige integer is
+            'formatted' => date('d-m-Y H:i', (int)$bestelling['datumtijd']) 
         ];
         if (isset($bestelling['products'])) {
             foreach ($bestelling['products'] as $idProduct) {
@@ -58,10 +58,10 @@ class Rekening
             }
         }
 
-        // Bereken het totaal door de prijzen van de producten op te tellen
+        // Bereken het totaal van de prijzen
         $totaal = 0;
         foreach ($bill['products'] as $product) {
-            $totaal += $product['data']['prijs'] * $product['aantal']; // Veronderstel dat 'prijs' een veld is in de productdata
+            $totaal += $product['data']['prijs'] * $product['aantal']; 
         }
         $bill['totaal'] = $totaal;
 
@@ -78,13 +78,13 @@ class Rekening
         $bm = new ProductTafelModel();
         $bestelling = $bm->getBestelling($idTafel);
 
-        // Verwijder alle producten van de bestelling
+        // Verwijderd alle producten van de bestelling
         foreach ($bestelling['products'] as $idProduct) {
-            $bm->deleteProductFromTable($idTafel, $idProduct); // Verwijder het product van de tafel
+            $bm->deleteProductFromTable($idTafel, $idProduct); // Verwijderd het product van de tafel
         }
 
-        // Redirect naar index.php na het leegmaken van de tafel
+        // terug naar index.php
         header("Location: index.php");
-        exit();  // Stop de uitvoering van het script na de redirect
+        exit();  
     }
 }

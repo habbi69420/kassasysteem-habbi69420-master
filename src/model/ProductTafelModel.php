@@ -43,7 +43,8 @@ class ProductTafelModel extends Model
     }
     public function saveBestelling(array $bestelling): int
 {
-    $lastInsertId = 0; // Variabele om het laatste ingevoerde ID op te slaan
+    // hier had ik een stuk van de function veranderd door het oude werkte die niet
+    $lastInsertId = 0; // varabiable om het laast geklikte product door te sturen
 
     foreach ($bestelling['products'] as $idProduct) {
         $this->setColumnValue('idtafel', $bestelling['idtafel']);
@@ -51,11 +52,11 @@ class ProductTafelModel extends Model
         $this->setColumnValue('betaald', 0);
         $this->setColumnValue('idproduct', $idProduct);
 
-        // Sla elk product afzonderlijk op in de database
+        // slaat elke product in zijn eentje op en niet alleen het eerste
         $lastInsertId = $this->save();
     }
 
-    return $lastInsertId; // Return het laatste ingevoerde ID (kan handig zijn voor verder gebruik)
+    return $lastInsertId; // geeft alle producten terug
 }
 
     /**

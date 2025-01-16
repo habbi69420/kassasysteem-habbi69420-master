@@ -96,19 +96,20 @@ require "../vendor/autoload.php";
 <body>
     <form action="bestellingdoorvoeren.php" method="post">
         <?php
-        // Haal de tafel-id op via GET
+        // QUESTION: Wat doet ?? in de code-regel hier onder?
+        // Antwoord: ?? betekent gebruik $_GET['idtafel'] of anders is die false.
         $idTafel = $_GET['idtafel'] ?? false;
         if ($idTafel) {
             echo "<input type='hidden' name='idtafel' value='$idTafel'>";
 
-            // Haal alle producten op uit de database
+            //variable met waar je alle Producten uit de database haalt en die in de variable zet
             $productModel = new ProductModel();
-            $producten = $productModel->getAll(); // Dit haalt alle producten op uit de database
+            $producten = $productModel->getAll(); // Dit haalt alle producten op uit de database via een function
 
-            // Toon elk product als een checkbox met een inputveld voor aantal
+            // laat elk product zien met een checkbox er voor en een input veltn waar je numer in kan zetten
             foreach ($producten as $product) {
                 $idProduct = $product->getColumnValue('idproduct');
-                $naam = $product->getColumnValue('naam'); // Veronderstel dat de naam van het product zo wordt opgehaald
+                $naam = $product->getColumnValue('naam'); // hierdoor krijgt elke checkbox zijn unieke waarde 
                 echo "<div class='product-item'>";
                 echo "<label><input type='checkbox' name='products[]' value='$idProduct'> $naam</label>";
                 echo "<label>Aantal: <input type='number' name='product_$idProduct' min='1' value='1'></label>";
@@ -117,7 +118,8 @@ require "../vendor/autoload.php";
 
             echo "<button class='submit-btn' type='submit'>Volgende</button>";
         } else {
-            // Als er geen tafel-id is opgegeven, toon een foutmelding
+             // QUESTION: Wat gebeurt hier?
+             // Antwoord: als er geen tafelid is gevonden dus warschijnlijk geslecteerd wordt je naar de komt er de error404.php waardoor je page not found in je scherm krijg
             http_response_code(404);
             include('error_404.php');
             die();

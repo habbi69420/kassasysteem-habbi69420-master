@@ -7,44 +7,40 @@ use Acme\model\ProductModel;
 
 require "../vendor/autoload.php";
 
-// Haal de tafel-id op uit de POST-data
+// Haalt de idtafel op uit POST
 if ($idTafel = $_POST['idtafel'] ?? false) {
 
-    // Haal de geselecteerde producten en aantallen op
+    // Haalt de geklikte producten en aantalle op
     $producten = $_POST['products'] ?? [];
     $aantallen = [];
 
-    // Haal de aantallen per product op
+    // Haalt de aantallen per product op
     foreach ($producten as $productId) {
-        $aantallen[$productId] = $_POST["product_$productId"] ?? 1; // Gebruik 1 als geen aantal is ingevuld
+        $aantallen[$productId] = $_POST["product_$productId"] ?? 1; // Gebruikt 1 als geen getal is ingevuld
     }
 
-    // Controleer of er producten zijn geselecteerd
+    // Controleert of er producten zijn aangevinkt
     if (!empty($producten)) {
-        // Maak een nieuw Bestelling object aan
+        // Maakt een nieuw Bestelling object aan
         $bestelling = new Bestelling($idTafel);
 
-        // Voeg de geselecteerde producten en hun aantallen toe aan de bestelling
+        // Voegt de geselecteerde producten en hun aantallen toe aan de bestelling
         foreach ($producten as $productId) {
-            $aantal = (int)$aantallen[$productId]; // Zorg ervoor dat het aantal een integer is
+            $aantal = (int)$aantallen[$productId]; // Zorgt ervoor dat het aantal een int is
             for ($i = 0; $i < $aantal; $i++) {
-                $bestelling->addProducts([$productId]); // Voeg het product het aantal keren toe
+                $bestelling->addProducts([$productId]); // Voegt het product het het zelfde aantal zoals het nummer toe
             }
         }
 
-        // Sla de bestelling op in de database
+        // Slaat de bestelling op in de database
         $bestelling->saveBestelling();
 
-        // Redirect naar de indexpagina of een andere pagina
-        echo "Bestelling succesvol opgeslagen!";
+        // gaat terug naar de index.pph pagina
         echo "<br>Geselecteerde producten: " . implode(", ", $producten);
         header("Location: index.php");
-    } else {
-        // Als er geen producten zijn geselecteerd, geef een foutmelding
-        echo "Geen producten geselecteerd.";
-    }
-} else {
-    // Als er geen tafel-id is opgegeven, toon een foutmelding
+    }}
+ else {
+    // geen tafel geeft error_404.php
     http_response_code(404);
     include('error_404.php');
     die();
